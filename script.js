@@ -1,4 +1,3 @@
-console.log('hi')
 let humanscore = 0
 let computerscore = 0
 
@@ -13,7 +12,6 @@ let scoredisp = document.getElementById("scoreDisplay")
 let winnerdisp = document.getElementById("winnerDisplay")
 buttons.forEach(button => {
     button.addEventListener('click', ()=> handleClick(button.id))
-    console.log(button.id)
 })
 
 function getcomputerchoice()
