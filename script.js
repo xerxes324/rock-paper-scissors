@@ -1,6 +1,20 @@
+console.log('hi')
 let humanscore = 0
 let computerscore = 0
 
+let container = document.getElementById("buttoncontainer")
+let rockbutton = document.getElementById("rock")
+let paperbutton = document.getElementById("paper")
+let scissorbutton = document.getElementById("scissor")
+let buttons = document.querySelectorAll("#buttoncontainer button")
+
+let resultdisp = document.getElementById("resultDisplay")
+let scoredisp = document.getElementById("scoreDisplay")
+let winnerdisp = document.getElementById("winnerDisplay")
+buttons.forEach(button => {
+    button.addEventListener('click', ()=> handleClick(button.id))
+    console.log(button.id)
+})
 
 function getcomputerchoice()
 {
@@ -20,11 +34,33 @@ function getcomputerchoice()
 }
 
 
-function gethumanchoice()
+function handleClick(choice)
 {
-    choice = prompt("Enter your choice: ")
-    return choice
+
+    let computerchoice = getcomputerchoice()
+    let resultandscore = playround(choice, computerchoice)
+    resultdisp.innerHTML = resultandscore.result
+    scoredisp.innerHTML = resultandscore.score
+
+    if ( humanscore == 5)
+    {
+        winnerdisp.innerHTML = "You won the game!"
+        rockbutton.disabled = true
+        scissorbutton.disabled = true
+        paperbutton.disabled = true
+    }
+    else if( computerscore == 5)
+    {
+        winnerdisp.innerHTML = "You lost the game! Computer wins!"
+        rockbutton.disabled = true
+        scissorbutton.disabled = true
+        paperbutton.disabled = true
+    }
+    
+
+    
 }
+
 
 
 function playround(humanchoice, computerchoice)
@@ -34,84 +70,50 @@ function playround(humanchoice, computerchoice)
     
     if ( humanchoice === computerchoice)
     {
-        return `It's a tie.\nYour choice:${humanchoice}\nComputer's choice:${computerchoice}
-Your score: ${humanscore}\nComputer's score:${computerscore}`
+        return {result : `Your choice: ${humanchoice} | Computer's choice: ${computerchoice}<br>It's a tie!`,
+    score : `Your score: ${humanscore} | Computer's score: ${computerscore}`}
+
     }
 
     else if ( humanchoice === "ROCK" && computerchoice === "SCISSOR" )
     {
         humanscore +=1 ;
-        return `Your choice : Rock\nComputer's choice: Scissor
-You win! Rock crushes scissor.
-Your score: ${humanscore}\nComputer's score:${computerscore}`
+        return {result : `Your choice: ${humanchoice} | Computer's choice: ${computerchoice} <br> You win! Rock crushes Scissor!`,
+    score : `Your score: ${humanscore} | Computer's score: ${computerscore}`}
     }
 
     else if ( humanchoice === "ROCK" && computerchoice === "PAPER")
     {   
         computerscore+=1;
-        return `Your choice : Rock\nComputer's choice: Paper
-You lose! Paper beats rock.
-Your score: ${humanscore}\nComputer's score:${computerscore}`
+        return {result : `Your choice: ${humanchoice} | Computer's choice: ${computerchoice} <br> You lose! Paper beats Rock!`,
+    score : `Your score: ${humanscore} | Computer's score: ${computerscore}`}
     }
 
     else if ( humanchoice === "SCISSOR" && computerchoice === "PAPER")
     {
         humanscore +=1 ;
-        return `Your choice : Scissor\nComputer's choice: Paper
-You win! Scissor beats paper.
-Your score: ${humanscore}\nComputer's score:${computerscore}`
+        return {result : `Your choice: ${humanchoice} | Computer's choice: ${computerchoice} <br> You win! Scissor cuts Paper!`,
+    score : `Your score: ${humanscore} | Computer's score: ${computerscore}`}
     }
 
     else if ( humanchoice === "SCISSOR" && computerchoice === "ROCK")
     {
         computerscore+=1;
-        return `Your choice : Scissor\nComputer's choice: Rock
-You lose! Rock crushes scissor.
-Your score: ${humanscore}\nComputer's score:${computerscore}`
+        return {result : `Your choice: ${humanchoice} | Computer's choice: ${computerchoice} <br> You lose! Rock crushes Scissor!`,
+    score : `Your score: ${humanscore} | Computer's score: ${computerscore}`}
     }
 
     else if ( humanchoice === "PAPER" && computerchoice === "ROCK")
     {
         humanscore +=1 ;
-        return `Your choice : Paper\nComputer's choice: Rock
-You win! Paper beats rock.
-Your score: ${humanscore}\nComputer's score:${computerscore}`
+        return {result : `Your choice: ${humanchoice} | Computer's choice: ${computerchoice} <br> You win! Paper beats rock!`,
+    score : `Your score: ${humanscore} | Computer's score: ${computerscore}`}
     }
 
     else if ( humanchoice === "PAPER" && computerchoice === "SCISSOR")
     {
         computerscore+=1;
-        return `Your choice : Paper\nComputer's choice: Scissor
-You lose! Scissor beats paper.
-Your score: ${humanscore}\nComputer's score:${computerscore}`
+        return {result : `Your choice: ${humanchoice} | Computer's choice: ${computerchoice} <br> You lose! Scissor beats paper!`,
+    score : `Your score: ${humanscore} | Computer's score: ${computerscore}`}
     }
 }
-
-
-
-function playgame()
-{
-    for ( let i = 0; i < 5; i++)
-    {
-        humanselection = gethumanchoice();
-        computerselection = getcomputerchoice();
-        console.log(playround(humanselection, computerselection))
-    }
-    console.log(humanscore,"is the human score.")
-    console.log(computerscore, "is the computer score.")
-    if (humanscore>computerscore)
-    {
-        return "You win the game!"
-    }
-    else if ( computerscore > humanscore)
-    {
-        return "You lose the game!"
-    }
-    else
-    {
-        return "It's a draw!"
-    }
-
-}
-
-playgame()
